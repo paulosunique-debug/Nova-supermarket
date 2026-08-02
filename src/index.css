@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  border-color: theme('colors.slate2.100');
+}
+.dark * {
+  border-color: theme('colors.slate2.700');
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: theme('colors.slate2.200');
+  border-radius: 8px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: theme('colors.slate2.600');
+}
+
+:focus-visible {
+  outline: 2px solid theme('colors.market.400');
+  outline-offset: 2px;
+}
+
+/* Signature: price-tag corner notch used on stat cards & product cards */
+.tag-corner {
+  position: relative;
+}
+.tag-corner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 22px 22px 0;
+  border-color: transparent currentColor transparent transparent;
+  opacity: 0.12;
+  border-top-right-radius: 4px;
+}
+
+/* Signature: receipt perforated edge for POS receipt preview */
+.receipt-edge {
+  background-image: radial-gradient(circle at 8px 0, transparent 7px, currentColor 7.2px);
+  background-size: 16px 8px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+  height: 8px;
+  color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
