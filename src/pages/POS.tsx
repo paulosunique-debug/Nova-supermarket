@@ -33,7 +33,7 @@ import { formatCurrency, round2 } from '../utils/currency';
 import { formatDateTime } from '../utils/date';
 import { stockAt } from '../utils/stock';
 import { cn } from '../utils/cn';
-import type { MobileProvider, PaymentMethod, Sale } from '../types';
+import type { MobileProvider, PaymentMethod, Sale, SplitPaymentPart } from '../types';
 
 const MOBILE_PROVIDERS: MobileProvider[] = ['TELEBIRR', 'CBE', 'BOA'];
 
@@ -288,13 +288,17 @@ export default function POS() {
       paymentMethod: method,
       mobileProvider: method === 'mobile-money' ? cart.mobileProvider : method === 'split' && Number(splitMobile) > 0 ? splitMobileProvider : null,
       splitPayments:
-        method === 'split'
-          ? [
-              { method: 'cash', amount: Number(splitCash) },
-              { method: 'card', amount: Number(splitCard) },
-              { method: 'mobile-money', amount: Number(splitMobile), mobileProvider: Number(splitMobile) > 0 ? splitMobileProvider : undefined }
-            ].filter((p) => p.amount > 0)
-          : null,
+      method === 'split'
+        ? ([
+            { method: 'cash', amount: Number(splitCash) },
+            { method: 'card', amount: Number(splitCard) },
+            {
+              method: 'mobile-money',
+              amount: Number(splitMobile),
+              mobileProvider: Number(splitMobile) > 0 ? splitMobileProvider : undefined
+            }
+          ].filter((p) => p.amount > 0) as SplitPaymentPart[])
+        : null,
       status: 'completed'
     });
 

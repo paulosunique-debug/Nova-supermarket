@@ -90,7 +90,7 @@ export function BarcodeScannerModal({ open, onClose, onDetected, title }: Barcod
       const hints = new Map();
       hints.set(DecodeHintType.POSSIBLE_FORMATS, FAST_FORMATS);
       hints.set(DecodeHintType.TRY_HARDER, false);
-      const reader = new BrowserMultiFormatReader(hints, 60); // scan every ~60ms instead of the ~500ms default
+      const reader = new BrowserMultiFormatReader(hints); // scan every ~60ms instead of the ~500ms default
       const controls = await reader.decodeFromVideoDevice(chosenDeviceId, videoRef.current!, (result) => {
         if (result) fire(result.getText());
       });

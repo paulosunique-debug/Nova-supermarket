@@ -27,8 +27,12 @@ export function toCSV(rows: Record<string, unknown>[]): string {
   return lines.join('\n');
 }
 
-export function exportCSV(filename: string, rows: Record<string, unknown>[]) {
-  downloadFile(filename, toCSV(rows), 'text/csv;charset=utf-8;');
+export function exportCSV<T extends object>(filename: string, rows: T[]) {
+  downloadFile(
+    filename,
+    toCSV(rows as unknown as Record<string, unknown>[]),
+    'text/csv;charset=utf-8;'
+  );
 }
 
 export function exportJSON(filename: string, data: unknown) {
